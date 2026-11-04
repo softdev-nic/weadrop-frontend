@@ -1,3 +1,5 @@
+"use client";
+
 import Form from "../components/Form";
 import { postRequest } from "../utilities/httphelper";
 
