@@ -15,7 +15,7 @@ const signIn = async(data,url)=>{
     const res = await postRequest(url, data);
     if(res?.token){
       localStorage.setItem("authorization", res.token);
-
+        window.location.href = "/dashboard";
       return res;
     
    }
