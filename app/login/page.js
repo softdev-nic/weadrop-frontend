@@ -14,7 +14,7 @@ const signIn = async(data,url)=>{
    try{
     const res = await postRequest(url, data);
     if(res?.token){
-      localStorage.setItem("auth-token", res.token);
+      localStorage.setItem("authorization", res.token);
 
       return res;
     
