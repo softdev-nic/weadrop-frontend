@@ -2,7 +2,6 @@
 import React from "react";
 import Button from "./Button";
 
-
 function Form({ inputs = [], submitLabel = "Submit", url, atSubmit }) {
   const [data, setData] = React.useState(() => {
     const initialData = {};
@@ -27,13 +26,17 @@ function Form({ inputs = [], submitLabel = "Submit", url, atSubmit }) {
     setError("");
     setSuccess("");
     try {
-     const res =  await atSubmit(data, url);
+      const res = await atSubmit(data, url);
       setSuccess(res?.message || "Submitted successfully");
-      setData(Object.fromEntries(inputs.map((i) => [i.name, ""])))
+      setData(Object.fromEntries(inputs.map((i) => [i.name, ""])));
     } catch (err) {
-      setError(err.response?.data?.message || "Something went wrong");
-      console.log(err.message)
-      setData(Object.fromEntries(inputs.map((i) => [i.name, ""])))
+      setError(
+        err.response?.data?.error ||
+          err.response?.data?.message ||
+          "Something went wrong"
+      );
+      console.log(err.message);
+      setData(Object.fromEntries(inputs.map((i) => [i.name, ""])));
     }
   };
 

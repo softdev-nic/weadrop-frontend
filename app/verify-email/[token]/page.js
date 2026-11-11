@@ -58,6 +58,16 @@ const VerifyEmailPage = () => {
         >
           {message}
         </p>
+        {status === "success" && (
+          <p className="mt-6 text-center">
+            <a
+              href="/login"
+              className="text-sm font-medium text-blue-600 hover:text-blue-700 hover:underline"
+            >
+              Go to login
+            </a>
+          </p>
+        )}
       </section>
     </main>
   );
