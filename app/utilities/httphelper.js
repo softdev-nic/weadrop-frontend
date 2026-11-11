@@ -13,10 +13,9 @@ export const getRequest = async (url) => {
 export const postRequest = async (url, data) => {
   try {
     const response = await API.post(url, data);
-    console.log({response})
     return response.data;
   } catch (error) {
-    console.error("Error in POST request:", error.message);
+    console.error("Error in POST request:", error);
     throw error;
   }
 };
@@ -41,3 +40,10 @@ export const deleteRequest = async (url) => {
   }
 };      
 
+ 
+
+ 
+
+
+
+        
