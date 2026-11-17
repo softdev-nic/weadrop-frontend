@@ -2,11 +2,24 @@
 import React from "react";
 import Button from "./Button";
 
+const getInitialValue = (input) => {
+  if (input.defaultValue !== undefined) {
+    return input.defaultValue;
+  }
+
+  if (input.type === "select") {
+    const selectedOption = input.options?.find((option) => option.selected);
+    return selectedOption?.value ?? input.options?.[0]?.value ?? "";
+  }
+
+  return "";
+};
+
 function Form({ inputs = [], submitLabel = "Submit", url, atSubmit }) {
   const [data, setData] = React.useState(() => {
     const initialData = {};
     inputs.forEach((input) => {
-      initialData[input.name] = "";
+      initialData[input.name] = getInitialValue(input);
     });
     return initialData;
   });
@@ -28,7 +41,8 @@ function Form({ inputs = [], submitLabel = "Submit", url, atSubmit }) {
     try {
       const res = await atSubmit(data, url);
       setSuccess(res?.message || "Submitted successfully");
-      setData(Object.fromEntries(inputs.map((i) => [i.name, ""])));
+      // clear the form only when the request succeeded
+      setData(Object.fromEntries(inputs.map((input) => [input.name, getInitialValue(input)])));
     } catch (err) {
       setError(
         err.response?.data?.error ||
@@ -36,7 +50,7 @@ function Form({ inputs = [], submitLabel = "Submit", url, atSubmit }) {
           "Something went wrong"
       );
       console.log(err.message);
-      setData(Object.fromEntries(inputs.map((i) => [i.name, ""])));
+      // values are kept on failure so the user only fixes what was wrong
     }
   };
 
@@ -52,16 +66,34 @@ function Form({ inputs = [], submitLabel = "Submit", url, atSubmit }) {
               {input.label}
               {input.required && <span className="ml-0.5 text-red-500">*</span>}
             </label>
-            <input
-              type={input.type}
-              id={input.id}
-              name={input.name}
-              placeholder={input.placeholder}
-              required={input.required}
-              value={data[input.name] ?? ""}
-              onChange={handleChange}
-              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 placeholder-gray-400 transition focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
-            />
+
+            {input.type === "select" ? (
+              <select
+                id={input.id}
+                name={input.name}
+                required={input.required}
+                value={data[input.name] ?? getInitialValue(input)}
+                onChange={handleChange}
+                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 transition focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
+              >
+                {input.options?.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+            ) : (
+              <input
+                type={input.type}
+                id={input.id}
+                name={input.name}
+                placeholder={input.placeholder}
+                required={input.required}
+                value={data[input.name] ?? ""}
+                onChange={handleChange}
+                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 placeholder-gray-400 transition focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
+              />
+            )}
           </div>
         ))}
 

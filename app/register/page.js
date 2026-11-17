@@ -2,6 +2,7 @@
 
 import Form from "../components/Form";
 import { postRequest } from "../utilities/httphelper";
+import { useRouter } from "next/router";
 
 const fields =  [
   { id: "name", label: "Full Name", type: "text", name: "name", placeholder: "Enter your full name", required: true },
@@ -15,7 +16,11 @@ const fields =  [
   { id: "postal", label: "Postal Code", type: "text", name: "postalCode", placeholder: "Enter your postal code", required: true },
 ];
 const signUp = async(data,url)=>{
-  return await postRequest(url, data)
+   await postRequest(url, data)
+   return window.location.href = "/login"
+   
+
+
 
 }
  
@@ -32,6 +37,7 @@ export default function RegistrationPage() {
           url="/user/register"
           atSubmit={signUp}
           submitLabel="Sign Up"
+          
         />
       </section>
     </main>
