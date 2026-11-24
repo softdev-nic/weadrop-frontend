@@ -1,0 +1,18 @@
+ @keyframes title-loop {
+  0%, 100% {
+    transform: translateY(0px) skewX(0deg) translateX(opx);
+    color: red;
+  }
+  50% {
+    transform: translateY(-6px) skewX(-4deg) translateX(90vw);
+    color: orange;
+  }
+  80%{
+    
+    color:green;
+  }
+}
+
+.animate-title {
+  animation: title-loop 5s ease-in-out infinite;
+}
