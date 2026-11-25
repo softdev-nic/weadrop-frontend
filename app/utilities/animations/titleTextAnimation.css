@@ -1,18 +1,69 @@
- @keyframes title-loop {
-  0%, 100% {
-    transform: translateY(0px) skewX(0deg) translateX(opx);
-    color: red;
+.title-accent {
+  color: #2563eb;
+}
+
+:root[data-theme="dark"] .title-accent {
+  color: #60a5fa;
+}
+
+.title-parcel {
+  width: 0.56em;
+  height: 0.56em;
+  margin: 0 0.05em;
+  transform-origin: 50% 100%;
+  animation: title-parcel-drop 0.9s ease-in both;
+}
+
+.title-road {
+  position: relative;
+  width: min(100%, 24rem);
+  height: 2.75rem;
+  margin: 1rem auto 0;
+  overflow: hidden;
+  border-bottom: 3px dashed #9ca3af;
+}
+
+.title-truck {
+  position: absolute;
+  bottom: 0;
+  left: calc(50% - 2rem);
+  width: 4rem;
+  height: 2.25rem;
+  animation: title-truck-drive 6s linear infinite;
+}
+
+@keyframes title-parcel-drop {
+  0% {
+    transform: translateY(-1em) rotate(-12deg);
+    opacity: 0;
   }
-  50% {
-    transform: translateY(-6px) skewX(-4deg) translateX(90vw);
-    color: orange;
+  55% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
   }
-  80%{
-    
-    color:green;
+  68% {
+    transform: scale(1.12, 0.85);
+  }
+  82% {
+    transform: translateY(-0.08em);
+  }
+  100% {
+    transform: none;
   }
 }
 
-.animate-title {
-  animation: title-loop 5s ease-in-out infinite;
+@keyframes title-truck-drive {
+  from {
+    left: -4rem;
+  }
+  to {
+    left: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .title-parcel,
+  .title-truck {
+    animation: none;
+  }
 }
