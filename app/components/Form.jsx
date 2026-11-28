@@ -1,5 +1,6 @@
  "use client";
 import React from "react";
+import Link from "next/link";
 import Button from "./Button";
 
 const getInitialValue = (input) => {
@@ -15,7 +16,7 @@ const getInitialValue = (input) => {
   return "";
 };
 
-function Form({ inputs = [], submitLabel = "Submit", url, atSubmit }) {
+function Form({ inputs = [], submitLabel = "Submit", url, atSubmit, links }) {
   const [data, setData] = React.useState(() => {
     const initialData = {};
     inputs.forEach((input) => {
@@ -102,6 +103,19 @@ function Form({ inputs = [], submitLabel = "Submit", url, atSubmit }) {
 
         <Button label={submitLabel} />
       </div>
+      {links?.length > 0 && (
+        <div className="flex flex-wrap justify-center gap-4">
+          {links.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="text-sm font-medium text-blue-600 hover:text-blue-700 hover:underline"
+            >
+              {link.label}
+            </Link>
+          ))}
+        </div>
+      )}
     </form>
   );
 }

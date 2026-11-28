@@ -34,7 +34,8 @@ const VerifyEmailContent = () => {
         setMessage(
           error?.response?.data?.error ||
             error?.response?.data?.message ||
-            "Unable to verify your email. Please try again or contact support."
+            "Unable to verify your email. Please try again"
+            
         );
       }
     };

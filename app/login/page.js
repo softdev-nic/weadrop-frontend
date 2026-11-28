@@ -10,6 +10,8 @@ const fields =  [
   { id: "password", label: "Password", type: "password", name: "password", placeholder: "Enter your password", required: true },
 ];
 
+// shown under the Login button
+const formLinks = [{ label: "Forgot password?", href: "/forgot-password/user/request" }];
 const signIn = async(data,url)=>{
    try{
     const res = await postRequest(url, data);
@@ -37,6 +39,7 @@ const signIn = async(data,url)=>{
           url="/user/login"
           atSubmit={signIn}
           submitLabel="Login"
+          links={formLinks}
         />
       </section>
     </main>
